@@ -1,0 +1,7 @@
+/build/
+/pkgbuild/pkg/
+/pkgbuild/src/
+/dist/
+*.pkg.tar.*
+__pycache__/
+aqtinstall.log

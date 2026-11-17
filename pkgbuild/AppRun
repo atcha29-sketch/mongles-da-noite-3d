@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+appdir="${APPDIR:-$(cd -- "$(dirname -- "$0")" && pwd)}"
+export QT_PLUGIN_PATH="$appdir/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+export QT_QPA_PLATFORM_PLUGIN_PATH="$appdir/usr/plugins/platforms"
+export QML2_IMPORT_PATH="$appdir/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+export QML_IMPORT_PATH="$appdir/usr/qml${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
+export QT_MEDIA_BACKEND="${QT_MEDIA_BACKEND:-gstreamer}"
+export GST_PLUGIN_PATH_1_0="$appdir/usr/lib/gstreamer-1.0"
+export GST_PLUGIN_SYSTEM_PATH_1_0="$appdir/usr/lib/gstreamer-1.0"
+export GST_PLUGIN_SCANNER_1_0="$appdir/usr/lib/gstreamer-1.0/gst-plugin-scanner"
+export GST_PLUGIN_PATH="$GST_PLUGIN_PATH_1_0"
+export GST_PLUGIN_SYSTEM_PATH="$GST_PLUGIN_SYSTEM_PATH_1_0"
+export GST_PLUGIN_SCANNER="$GST_PLUGIN_SCANNER_1_0"
+export GST_REGISTRY="${GST_REGISTRY:-${XDG_CACHE_HOME:-$HOME/.cache}/mongles-da-noite/gstreamer-registry.bin}"
+
+exec "$appdir/usr/bin/mongles-da-noite" "$@"

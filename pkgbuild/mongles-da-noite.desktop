@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Mongles da Noite
+Name[pt_BR]=Mongles da Noite
+Comment=Sobreviva a uma noite cheia de criaturas
+Comment[pt_BR]=Sobreviva a uma noite cheia de criaturas
+Exec=mongles-da-noite
+Icon=mongles-da-noite
+Terminal=false
+Categories=Game;ArcadeGame;
+StartupWMClass=mongles-da-noite

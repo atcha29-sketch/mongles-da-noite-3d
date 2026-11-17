@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root_dir="$(cd -- "$(dirname -- "$0")/.." && pwd)"
+tools_dir="$root_dir/build/appimage-tools"
+appdir="$root_dir/build/MonglesDaNoite.AppDir"
+output_dir="$root_dir/dist"
+output="$output_dir/mongles-da-noite-0.1.0-x86_64.AppImage"
+
+download_tool() {
+    local path="$1"
+    local url="$2"
+    if [[ ! -x "$path" ]]; then
+        mkdir -p "$tools_dir"
+        curl --fail --location --silent --show-error "$url" --output "$path"
+        chmod +x "$path"
+    fi
+}
+
+download_tool "$tools_dir/linuxdeploy-x86_64.AppImage" \
+    "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+download_tool "$tools_dir/linuxdeploy-plugin-qt-x86_64.AppImage" \
+    "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+download_tool "$tools_dir/appimagetool-x86_64.AppImage" \
+    "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+
+"$root_dir/bin/build"
+rm -rf -- "$appdir"
+mkdir -p "$appdir"
+install -Dm755 "$root_dir/build/mongles-da-noite" "$appdir/usr/bin/mongles-da-noite"
+install -Dm644 "$root_dir/pkgbuild/mongles-da-noite.desktop" \
+    "$appdir/usr/share/applications/mongles-da-noite.desktop"
+install -Dm644 "$root_dir/pkgbuild/mongles-da-noite.svg" \
+    "$appdir/usr/share/icons/hicolor/scalable/apps/mongles-da-noite.svg"
+
+export APPIMAGE_EXTRACT_AND_RUN=1
+export ARCH=x86_64
+export EXTRA_PLATFORM_PLUGINS="libqwayland.so;libqoffscreen.so"
+export NO_STRIP=1
+export QMAKE=/usr/bin/qmake6
+export QML_SOURCES_PATHS="$root_dir/src"
+"$tools_dir/linuxdeploy-x86_64.AppImage" \
+    --appdir "$appdir" \
+    --executable "$appdir/usr/bin/mongles-da-noite" \
+    --desktop-file "$appdir/usr/share/applications/mongles-da-noite.desktop" \
+    --icon-file "$appdir/usr/share/icons/hicolor/scalable/apps/mongles-da-noite.svg" \
+    --custom-apprun "$root_dir/pkgbuild/AppRun" \
+    --plugin qt
+
+gst_dir="$appdir/usr/lib/gstreamer-1.0"
+mkdir -p "$gst_dir"
+for plugin in libgstcoreelements.so libgstaudioconvert.so libgstaudioresample.so \
+    libgstplayback.so libgstwavparse.so libgsttypefindfunctions.so libgstautodetect.so \
+    libgstvolume.so libgstvideoconvertscale.so libgstpulseaudio.so libgstalsa.so; do
+    install -m755 "/usr/lib/gstreamer-1.0/$plugin" "$gst_dir/$plugin"
+done
+install -m755 /usr/lib/gstreamer-1.0/gst-plugin-scanner "$gst_dir/gst-plugin-scanner"
+"$tools_dir/linuxdeploy-x86_64.AppImage" \
+    --appdir "$appdir" \
+    --deploy-deps-only "$gst_dir"
+
+mkdir -p "$output_dir"
+"$tools_dir/appimagetool-x86_64.AppImage" "$appdir" "$output"
+printf 'Created %s\n' "$output"

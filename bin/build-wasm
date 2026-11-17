@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eu
+
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+QT_WASM_ROOT="${QT_WASM_ROOT:-$HOME/Qt/6.12.0/wasm_singlethread}"
+EMSDK_DIR="${EMSDK_DIR:-$HOME/emsdk}"
+BUILD_DIR="$ROOT/build/wasm"
+
+if [ ! -x "$QT_WASM_ROOT/bin/qmake" ]; then
+    echo "Qt WebAssembly kit not found at $QT_WASM_ROOT" >&2
+    echo "Set QT_WASM_ROOT to the Qt 6.12 wasm_singlethread directory." >&2
+    exit 1
+fi
+
+if [ ! -f "$EMSDK_DIR/emsdk_env.sh" ]; then
+    echo "Emscripten SDK not found at $EMSDK_DIR" >&2
+    echo "Set EMSDK_DIR to the Emscripten SDK directory." >&2
+    exit 1
+fi
+
+export EMSDK_QUIET=1
+. "$EMSDK_DIR/emsdk_env.sh"
+
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
+"$QT_WASM_ROOT/bin/qmake" "$ROOT/mongles-da-noite.pro" \
+    "CONFIG+=release"
+make -j"$(getconf _NPROCESSORS_ONLN)"
+
+echo "Built $BUILD_DIR/mongles-da-noite.html"

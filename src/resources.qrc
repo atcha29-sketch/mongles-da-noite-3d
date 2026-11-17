@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="Main.qml">Main.qml</file>
+        <file alias="World3D.qml">World3D.qml</file>
+        <file alias="i18n/pt-BR.json">i18n/pt-BR.json</file>
+        <file alias="audio/shot.wav">audio/shot.wav</file>
+        <file alias="audio/hit.wav">audio/hit.wav</file>
+        <file alias="audio/pickup.wav">audio/pickup.wav</file>
+        <file alias="audio/levelup.wav">audio/levelup.wav</file>
+        <file alias="audio/fire.wav">audio/fire.wav</file>
+        <file alias="audio/ice.wav">audio/ice.wav</file>
+        <file alias="audio/lightning.wav">audio/lightning.wav</file>
+        <file alias="audio/shadow.wav">audio/shadow.wav</file>
+        <file alias="audio/hurt.wav">audio/hurt.wav</file>
+        <file alias="audio/gameover.wav">audio/gameover.wav</file>
+        <file alias="audio/boss.wav">audio/boss.wav</file>
+        <file alias="audio/stage.wav">audio/stage.wav</file>
+        <file alias="audio/victory.wav">audio/victory.wav</file>
+        <file alias="audio/horde.wav">audio/horde.wav</file>
+        <file alias="audio/attack-warrior.wav">audio/attack-warrior.wav</file>
+        <file alias="audio/attack-mage.wav">audio/attack-mage.wav</file>
+        <file alias="audio/attack-archer.wav">audio/attack-archer.wav</file>
+        <file alias="audio/attack-lango.wav">audio/attack-lango.wav</file>
+        <file alias="audio/attack-kalengue.wav">audio/attack-kalengue.wav</file>
+        <file alias="audio/attack-bronha.wav">audio/attack-bronha.wav</file>
+        <file alias="audio/upgrade-warrior.wav">audio/upgrade-warrior.wav</file>
+        <file alias="audio/upgrade-mage.wav">audio/upgrade-mage.wav</file>
+        <file alias="audio/upgrade-archer.wav">audio/upgrade-archer.wav</file>
+        <file alias="audio/upgrade-lango.wav">audio/upgrade-lango.wav</file>
+        <file alias="audio/upgrade-kalengue.wav">audio/upgrade-kalengue.wav</file>
+        <file alias="audio/upgrade-bronha.wav">audio/upgrade-bronha.wav</file>
+        <file alias="audio/music-alley.wav">audio/music-alley.wav</file>
+        <file alias="audio/music-backyard.wav">audio/music-backyard.wav</file>
+        <file alias="audio/music-cave.wav">audio/music-cave.wav</file>
+        <file alias="audio/music-central.wav">audio/music-central.wav</file>
+        <file alias="audio/music-valley.wav">audio/music-valley.wav</file>
+        <file alias="audio/music-boss-alley.wav">audio/music-boss-alley.wav</file>
+        <file alias="audio/music-boss-backyard.wav">audio/music-boss-backyard.wav</file>
+        <file alias="audio/music-boss-cave.wav">audio/music-boss-cave.wav</file>
+        <file alias="audio/music-boss-central.wav">audio/music-boss-central.wav</file>
+        <file alias="audio/music-boss-valley.wav">audio/music-boss-valley.wav</file>
+    </qresource>
+</RCC>
